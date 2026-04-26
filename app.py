@@ -290,7 +290,8 @@ p, span, div, li, label, h1, h2, h3, h4, h5, h6 {
     padding: 0.25rem 0.65rem;
     border-radius: 2px;
     margin: 0.2rem 0.3rem 0.2rem 0;
-    word-break: break-all;
+    word-break: normal;
+    overflow-wrap: anywhere;
 }
 .source-chip a { color: #f5f0e8 !important; text-decoration: none; }
 .source-chip a:hover { text-decoration: underline; }
@@ -452,8 +453,9 @@ if run:
                     feedback_text = data.get("feedback", {}).get("content", "No feedback generated.")
                     score_val, strengths, improvements, verdict = parse_feedback(feedback_text)
 
-                    st.markdown('<div class="feedback-col">', unsafe_allow_html=True)
-                    st.markdown('<div class="card-label">🔎 Critic Feedback</div>', unsafe_allow_html=True)
+                    # build entire feedback block as one HTML string
+                    feedback_html = '<div class="feedback-col">'
+                    feedback_html += '<div class="card-label">🔎 Critic Feedback</div>'
 
                     if score_val:
                         try:
@@ -461,36 +463,47 @@ if run:
                             color = "#1a6b4a" if n >= 7 else "#c8410a" if n < 5 else "#b07d1a"
                         except Exception:
                             color = "#c8410a"
-                        st.markdown(
+                        feedback_html += (
                             f'<div class="score-badge" style="color:{color};border-color:{color};">'
-                            f'Score &nbsp; {score_val}</div>',
-                            unsafe_allow_html=True)
+                            f'Score &nbsp; {score_val}</div>'
+                        )
 
                     if strengths:
-                        st.markdown('<div class="feedback-section-label">✅ Strengths</div>', unsafe_allow_html=True)
+                        feedback_html += '<div class="feedback-section-label">✅ Strengths</div>'
                         for s in strengths:
-                            st.markdown(f'<div class="feedback-item feedback-strength">▸ {s}</div>', unsafe_allow_html=True)
+                            feedback_html += f'<div class="feedback-item feedback-strength">▸ {s}</div>'
 
                     if improvements:
-                        st.markdown('<div class="feedback-section-label" style="margin-top:1rem;">⚠ Areas to Improve</div>', unsafe_allow_html=True)
+                        feedback_html += '<div class="feedback-section-label" style="margin-top:1rem;">⚠ Areas to Improve</div>'
                         for imp in improvements:
-                            st.markdown(f'<div class="feedback-item feedback-improve">▸ {imp}</div>', unsafe_allow_html=True)
+                            feedback_html += f'<div class="feedback-item feedback-improve">▸ {imp}</div>'
 
                     if verdict:
-                        st.markdown(f'<div class="verdict-box">💬 {verdict}</div>', unsafe_allow_html=True)
+                        feedback_html += f'<div class="verdict-box">💬 {verdict}</div>'
 
                     if not score_val and not strengths and not improvements:
-                        st.markdown(feedback_text)
+                        feedback_html += f'<p>{feedback_text}</p>'
 
-                    st.markdown('</div>', unsafe_allow_html=True)
+                    feedback_html += '</div>'
+                    st.markdown(feedback_html, unsafe_allow_html=True)
 
+                    # ── Sources ──
                     sources = data.get("sources", [])
                     if sources:
-                        st.markdown('<div class="card-label" style="margin-top:1.5rem;">🔗 Sources</div>', unsafe_allow_html=True)
-                        chips = "".join(
-                            f'<span class="source-chip"><a href="{s}" target="_blank">{s}</a></span>'
-                            for s in sources)
-                        st.markdown(f'<div style="margin-top:0.4rem">{chips}</div>', unsafe_allow_html=True)
+                        from urllib.parse import urlparse
+                        chips = ""
+                        for s in sources:
+                            try:
+                                parsed = urlparse(s)
+                                label = parsed.netloc + (parsed.path[:30] + "…" if len(parsed.path) > 30 else parsed.path)
+                            except Exception:
+                                label = s[:40] + "…"
+                            chips += f'<span class="source-chip"><a href="{s}" target="_blank">{label}</a></span>'
+                        st.markdown(
+                            f'<div class="card-label" style="margin-top:1.5rem;">🔗 Sources</div>'
+                            f'<div style="margin-top:0.4rem">{chips}</div>',
+                            unsafe_allow_html=True
+                        )
 
         except Exception as e:
             st.markdown(f'<div class="error-box">⚠ Unexpected error: {e}</div>', unsafe_allow_html=True)
