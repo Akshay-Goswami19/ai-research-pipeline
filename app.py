@@ -17,14 +17,15 @@ st.markdown("""
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap');
 
 :root {
-    --ink:     #0f0e0d;
-    --paper:   #f5f0e8;
+    --ink:     #f5f0e8;
+    --paper:   #0f0e0d;
     --accent:  #c8410a;
     --green:   #1a6b4a;
     --amber:   #b07d1a;
-    --muted:   #7a7060;
-    --border:  #d9d0c0;
-    --card-bg: #faf7f2;
+    --card-bg: #1a1917;
+    --border:  #2e2b26;
+    --muted:   #a89f90;
+
 }
 
 html, body, [class*="css"] {
@@ -68,7 +69,7 @@ html, body, [class*="css"] {
     border-bottom: 2px solid var(--border) !important;
     border-radius: 0 !important;
     padding: 0.5rem 0.25rem !important;
-    color: var(--paper) !important;
+    color: #f5f0e8 !important;
 }
 .stTextInput > div > div > input:focus {
     border-bottom-color: var(--accent) !important;
@@ -222,14 +223,14 @@ html, body, [class*="css"] {
     margin-bottom: 0.35rem;
 }
 .feedback-strength {
-    background: #edf7f1;
     border-left: 3px solid var(--green);
-    color: #0f3d27;
+    background: #0d2b1e;
+    color: #a8dfc0;
 }
 .feedback-improve {
-    background: #fff4ed;
     border-left: 3px solid var(--accent);
-    color: #5c1e06;
+    background: #2b1108;
+    color: #f5b99a;
 }
 .verdict-box {
     margin-top: 1.2rem;
