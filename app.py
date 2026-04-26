@@ -441,6 +441,10 @@ if run:
                 # ── Report ────────────────────────────────────────────────────
                 with col_report:
                     report_text = data.get("report", {}).get("content", "No report generated.")
+                    # Strip the Sources section from report — shown separately below
+                    import re as _re
+                    report_text = _re.split(r'\n#{1,3}\s*Sources?', report_text, flags=_re.IGNORECASE)[0]
+                    report_text = _re.split(r'\n\*\*Sources?\*\*', report_text, flags=_re.IGNORECASE)[0]
                     st.markdown('<div class="card-label">📋 Research Report</div>', unsafe_allow_html=True)
                     import markdown as md_lib
                     try:
