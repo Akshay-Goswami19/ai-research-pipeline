@@ -284,7 +284,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
 """, unsafe_allow_html=True)
 
 # ── Constants ──────────────────────────────────────────────────────────────────
-API_BASE = "http://localhost:8000"
+API_BASE = "https://ai-research-pipeline.onrender.com/research"
 PIPELINE_STEPS = [("🔍", "Search"), ("📄", "Scrape"), ("✍️", "Write"), ("🔎", "Critique")]
 
 # ── Helpers ────────────────────────────────────────────────────────────────────
