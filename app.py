@@ -30,8 +30,30 @@ st.markdown("""
 
 html, body, [class*="css"] {
     font-family: 'DM Sans', sans-serif;
-    background-color: var(--paper);
-    color: var(--ink);
+    background-color: var(--paper) !important;
+    color: var(--ink) !important;
+}
+
+/* Force Streamlit's own containers to go dark */
+.stApp {
+    background-color: var(--paper) !important;
+}
+.stApp > header {
+    background-color: var(--paper) !important;
+}
+section[data-testid="stSidebar"] {
+    background-color: var(--paper) !important;
+}
+.stMainBlockContainer, div[data-testid="stAppViewContainer"] {
+    background-color: var(--paper) !important;
+}
+/* Input background fix */
+.stTextInput > div > div {
+    background-color: var(--paper) !important;
+}
+.stTextInput > div > div > input {
+    background-color: var(--paper) !important;
+    caret-color: var(--ink) !important;
 }
 
 #MainMenu, footer, header { visibility: hidden; }
@@ -285,7 +307,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
 """, unsafe_allow_html=True)
 
 # ── Constants ──────────────────────────────────────────────────────────────────
-API_BASE = "https://ai-research-pipeline.onrender.com/research"
+API_BASE = "https://ai-research-pipeline.onrender.com"
 PIPELINE_STEPS = [("🔍", "Search"), ("📄", "Scrape"), ("✍️", "Write"), ("🔎", "Critique")]
 
 # ── Helpers ────────────────────────────────────────────────────────────────────
