@@ -25,35 +25,27 @@ st.markdown("""
     --card-bg: #1a1917;
     --border:  #2e2b26;
     --muted:   #a89f90;
-
 }
 
-html, body, [class*="css"] {
-    font-family: 'DM Sans', sans-serif;
-    background-color: var(--paper) !important;
-    color: var(--ink) !important;
+/* ── Force dark background everywhere ── */
+html, body { background-color: #0f0e0d !important; color: #f5f0e8 !important; }
+.stApp, .stApp > div, div[data-testid="stAppViewContainer"],
+div[data-testid="stHeader"], div[data-testid="stToolbar"],
+.stMainBlockContainer, .main, .block-container,
+div[data-testid="stVerticalBlock"], div[data-testid="column"] {
+    background-color: #0f0e0d !important;
+    color: #f5f0e8 !important;
 }
 
-/* Force Streamlit's own containers to go dark */
-.stApp {
-    background-color: var(--paper) !important;
+/* ── Force all text inside streamlit to be light ── */
+p, span, div, li, label, h1, h2, h3, h4, h5, h6 {
+    color: #f5f0e8 !important;
 }
-.stApp > header {
-    background-color: var(--paper) !important;
-}
-section[data-testid="stSidebar"] {
-    background-color: var(--paper) !important;
-}
-.stMainBlockContainer, div[data-testid="stAppViewContainer"] {
-    background-color: var(--paper) !important;
-}
-/* Input background fix */
-.stTextInput > div > div {
-    background-color: var(--paper) !important;
-}
-.stTextInput > div > div > input {
-    background-color: var(--paper) !important;
-    caret-color: var(--ink) !important;
+
+/* ── Streamlit markdown rendered text ── */
+.stMarkdown, .stMarkdown p, .stMarkdown li,
+.stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
+    color: #f5f0e8 !important;
 }
 
 #MainMenu, footer, header { visibility: hidden; }
@@ -83,26 +75,36 @@ section[data-testid="stSidebar"] {
 }
 
 /* ── Input ── */
+.stTextInput > div > div,
+.stTextInput > div > div > input {
+    background-color: #0f0e0d !important;
+    background: #0f0e0d !important;
+}
 .stTextInput > div > div > input {
     font-family: 'DM Serif Display', serif !important;
     font-size: 1.15rem !important;
-    background: transparent !important;
     border: none !important;
-    border-bottom: 2px solid var(--border) !important;
+    border-bottom: 2px solid #2e2b26 !important;
     border-radius: 0 !important;
     padding: 0.5rem 0.25rem !important;
     color: #f5f0e8 !important;
+    caret-color: #f5f0e8 !important;
+}
+.stTextInput > div > div > input::placeholder {
+    color: #a89f90 !important;
+    opacity: 1 !important;
 }
 .stTextInput > div > div > input:focus {
-    border-bottom-color: var(--accent) !important;
+    border-bottom-color: #c8410a !important;
     box-shadow: none !important;
+    outline: none !important;
 }
 .stTextInput > label {
     font-family: 'DM Mono', monospace;
     font-size: 0.72rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--muted);
+    color: #a89f90 !important;
 }
 
 /* ── Button ── */
@@ -111,7 +113,7 @@ section[data-testid="stSidebar"] {
     font-size: 0.75rem !important;
     letter-spacing: 0.1em !important;
     text-transform: uppercase !important;
-    background: var(--accent) !important;
+    background: #c8410a !important;
     color: #fff !important;
     border: none !important;
     border-radius: 2px !important;
@@ -143,8 +145,8 @@ section[data-testid="stSidebar"] {
     transition: background 0.3s, color 0.3s;
 }
 .pipe-step:last-child { border-right: none; }
-.pipe-step.active { background: var(--ink); color: #fff; }
-.pipe-step.done   { background: var(--green); color: #fff; }
+.pipe-step.active { background: #f5f0e8; color: #0f0e0d !important; }
+.pipe-step.done   { background: var(--green); color: #fff !important; }
 .pipe-icon { display: block; font-size: 1rem; margin-bottom: 2px; }
 
 /* ── Section label ── */
@@ -153,7 +155,7 @@ section[data-testid="stSidebar"] {
     font-size: 0.68rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--muted);
+    color: #a89f90 !important;
     margin-bottom: 1rem;
     display: flex;
     align-items: center;
@@ -168,21 +170,23 @@ section[data-testid="stSidebar"] {
 
 /* ── Report body ── */
 .report-body {
-    background: var(--card-bg);
-    border: 1.5px solid var(--border);
+    background: #1a1917;
+    border: 1.5px solid #2e2b26;
     border-radius: 3px;
     padding: 1.75rem 2rem;
+    color: #f5f0e8 !important;
 }
-.report-body p {
+.report-body p, .report-body li, .report-body span {
+    color: #f5f0e8 !important;
     font-size: 0.95rem;
     line-height: 1.8;
     margin-bottom: 0.85rem;
 }
 .report-body h1, .report-body h2, .report-body h3 {
     font-family: 'DM Serif Display', serif;
+    color: #f5f0e8 !important;
     margin: 1.4rem 0 0.5rem;
 }
-/* Fix numbered list: number + text stay on same line, wrapped text indents */
 .report-body ol {
     padding-left: 0;
     margin: 0.75rem 0;
@@ -202,7 +206,7 @@ section[data-testid="stSidebar"] {
     content: counter(report-counter) ".";
     font-family: 'DM Mono', monospace;
     font-size: 0.85rem;
-    color: var(--accent);
+    color: #c8410a !important;
     padding-top: 0.05rem;
 }
 .report-body ul {
@@ -213,6 +217,7 @@ section[data-testid="stSidebar"] {
     margin-bottom: 0.5rem;
     font-size: 0.95rem;
     line-height: 1.75;
+    color: #f5f0e8 !important;
 }
 
 /* ── Score badge ── */
@@ -257,20 +262,20 @@ section[data-testid="stSidebar"] {
 .verdict-box {
     margin-top: 1.2rem;
     padding: 0.8rem 1rem;
-    background: var(--card-bg);
-    border: 1.5px solid var(--border);
+    background: #1a1917;
+    border: 1.5px solid #2e2b26;
     border-radius: 3px;
     font-family: 'DM Serif Display', serif;
     font-size: 1rem;
     font-style: italic;
-    color: var(--ink);
+    color: #f5f0e8 !important;
     line-height: 1.6;
 }
 
 /* ── Feedback column wrapper ── */
 .feedback-col {
-    background: var(--card-bg);
-    border: 1.5px solid var(--border);
+    background: #1a1917;
+    border: 1.5px solid #2e2b26;
     border-radius: 3px;
     padding: 1.75rem 1.75rem 1.5rem;
 }
@@ -280,29 +285,29 @@ section[data-testid="stSidebar"] {
     display: inline-block;
     font-family: 'DM Mono', monospace;
     font-size: 0.67rem;
-    background: var(--ink);
-    color: var(--paper);
+    background: #2e2b26;
+    color: #f5f0e8 !important;
     padding: 0.25rem 0.65rem;
     border-radius: 2px;
     margin: 0.2rem 0.3rem 0.2rem 0;
     word-break: break-all;
 }
-.source-chip a { color: var(--paper); text-decoration: none; }
+.source-chip a { color: #f5f0e8 !important; text-decoration: none; }
 .source-chip a:hover { text-decoration: underline; }
 
 /* ── Error box ── */
 .error-box {
-    background: #fff0ed;
-    border: 1.5px solid var(--accent);
+    background: #2b1108;
+    border: 1.5px solid #c8410a;
     border-radius: 3px;
     padding: 1rem 1.5rem;
     font-family: 'DM Mono', monospace;
     font-size: 0.82rem;
-    color: var(--accent);
+    color: #f5b99a !important;
 }
 
-hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
-.stSpinner > div { border-top-color: var(--accent) !important; }
+hr { border: none; border-top: 1px solid #2e2b26; margin: 2rem 0; }
+.stSpinner > div { border-top-color: #c8410a !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -435,9 +440,12 @@ if run:
                 with col_report:
                     report_text = data.get("report", {}).get("content", "No report generated.")
                     st.markdown('<div class="card-label">📋 Research Report</div>', unsafe_allow_html=True)
-                    st.markdown('<div class="report-body">', unsafe_allow_html=True)
-                    st.markdown(report_text)
-                    st.markdown('</div>', unsafe_allow_html=True)
+                    import markdown as md_lib
+                    try:
+                        report_html = md_lib.markdown(report_text, extensions=["extra"])
+                    except Exception:
+                        report_html = report_text.replace("\n", "<br>")
+                    st.markdown(f'<div class="report-body">{report_html}</div>', unsafe_allow_html=True)
 
                 # ── Feedback ──────────────────────────────────────────────────
                 with col_feedback:
