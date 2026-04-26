@@ -282,19 +282,20 @@ p, span, div, li, label, h1, h2, h3, h4, h5, h6 {
 
 /* ── Source chips ── */
 .source-chip {
-    display: inline-block;
+    display: block;
     font-family: 'DM Mono', monospace;
-    font-size: 0.67rem;
-    background: #2e2b26;
-    color: #f5f0e8 !important;
-    padding: 0.25rem 0.65rem;
+    font-size: 0.72rem;
+    background: #1a1917;
+    color: #c8410a !important;
+    padding: 0.4rem 0.75rem;
     border-radius: 2px;
-    margin: 0.2rem 0.3rem 0.2rem 0;
-    word-break: normal;
+    border: 1px solid #2e2b26;
+    text-decoration: none;
+    word-break: break-word;
     overflow-wrap: anywhere;
+    line-height: 1.5;
 }
-.source-chip a { color: #f5f0e8 !important; text-decoration: none; }
-.source-chip a:hover { text-decoration: underline; }
+.source-chip:hover { background: #2e2b26; text-decoration: underline; }
 
 /* ── Error box ── */
 .error-box {
@@ -490,18 +491,14 @@ if run:
                     # ── Sources ──
                     sources = data.get("sources", [])
                     if sources:
-                        from urllib.parse import urlparse
                         chips = ""
                         for s in sources:
-                            try:
-                                parsed = urlparse(s)
-                                label = parsed.netloc + (parsed.path[:30] + "…" if len(parsed.path) > 30 else parsed.path)
-                            except Exception:
-                                label = s[:40] + "…"
-                            chips += f'<span class="source-chip"><a href="{s}" target="_blank">{label}</a></span>'
+                            chips += (
+                                f'<a class="source-chip" href="{s}" target="_blank">🔗 {s}</a>'
+                            )
                         st.markdown(
                             f'<div class="card-label" style="margin-top:1.5rem;">🔗 Sources</div>'
-                            f'<div style="margin-top:0.4rem">{chips}</div>',
+                            f'<div style="margin-top:0.4rem;display:flex;flex-direction:column;gap:0.4rem">{chips}</div>',
                             unsafe_allow_html=True
                         )
 
